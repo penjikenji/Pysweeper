@@ -43,9 +43,7 @@ class Board:
         if (grid[x][y].mine):
             return True
         return False
-
-    # TODO: This is better in an if-else.. right? I can't remember
-    # TODO: That or I have frog brain
+        
     # Searches the adjacent tiles of the clicked tile for mines
     def searchAdjMine(self, grid, x, y):
         adj = 0

@@ -1,15 +1,3 @@
-######-General TODOs-######
-# TODO: Add time and flag counter???
-# TODO: Cleaning up the mess
-# TODO: Beat minesweeper
-######---------------######
-# TODO Line 111: Implement a debug mode
-######-Suggestions-########
-# Limited number of flags (An array of counters that only reaches up to 10? Then when it is unchecked it is removed using pop())
-# Un-hard code everything
-# Minimize size of tiles/resolution
-# Menubar for reset/difficulty/etc. (May require either pygame-gui or pygame-menu)
-
 import pygame
 import os
 from random import randint
@@ -20,6 +8,7 @@ import time
 
 # mmmm constants
 GRAY = (140, 138, 137)
+BLACK = (0, 0, 0)
 smile = pygame.image.load("resources/smile.png")
 smiledead = pygame.image.load("resources/smiledead.png")
 smilepressed = pygame.image.load("resources/smilepressed.png")
@@ -45,12 +34,12 @@ class Main():
         self.smileImages = {}
 
         self.grid = []
-
         self.screen = pygame.display.set_mode(self.size)
 
         # Flag limit
         self.flagCounter = 10
 
+        # Win/lose indicator
         self.mined = False
         self.isWin = False
 
@@ -62,19 +51,17 @@ class Main():
         # Very janky solution
         self.held = False
 
-        # Initial click check
+        # Initial click check (used to avoid lose on first click)
         self.initClick = False
 
     def run(self):
         pygame.init()
         running = True
-        pygame.display.set_caption("Pymine") # It's not blind anymore yay
+        pygame.display.set_caption("Pymine")
         pygame.display.set_icon(pygame.image.load('resources/bomb.png'))
         self.grid = Board.getGrid(Board)  
         self.loadImage()          
         self.draw()
-
-        start_time = 0
 
         if (self.isDebug == True):
            self.debug()
@@ -101,6 +88,7 @@ class Main():
                     # Ignore any input outside of grid (aka anything outside the grid is not grid therefore ignore)
                     if (not Board().inboundChecker(x, y)):
                         continue        
+
                     # Once the game is done, no other input on the board should be accepted
                     if (Board().inboundChecker and self.mined or Board().inboundChecker and self.isWin):
                         continue
@@ -108,6 +96,7 @@ class Main():
                     # If first click is a mine, move it to one of the corners of the grid
                     if(not self.initClick):
                         if (event.button == 1 and self.grid[x][y].mine):
+
                             self.grid[x][y].mine = False
                             
                             if (self.grid[0][0].mine == False):
@@ -188,10 +177,12 @@ class Main():
                 tLeft = (tLeft[0] + self.tileSize[0], tLeft[1])
 
             tLeft = (0, tLeft[1] + self.tileSize[1])
+        
+        # Display flag counter on screen
         font = pygame.font.SysFont('Arial', 24)
-        flagCounter = font.render(str(self.flagCounter), True, (0, 0, 0))
+        flagCounter = font.render(str(self.flagCounter), True, BLACK)
         self.screen.blit(flagCounter, (150, 210))
-
+       
     # Debug mode which reveals mines
     def debug(self):
         Board().revealGrid(self.grid)
