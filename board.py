@@ -2,14 +2,10 @@ import pygame
 from tile import Tile
 from random import randint
 
-class Board():
+class Board:
     def __init__(self):
         self.mines = 10
         self.grid = []
-
-    # A list comphrehension that makes a 9x9 2D array for the grid
-    def makeGrid(self):
-        self.grid = [[Tile() for x in range(10)] for x in range(10)]
    
     # Makes some mines
     def makeMines(self):
@@ -18,6 +14,11 @@ class Board():
             y = randint(0, 9)
             if (not self.grid[x][y].mine):
                 self.grid[x][y].mine = True 
+
+    # A list comphrehension that makes a 9x9 2D array for the grid
+    def makeGrid(self):
+        self.grid = [[Tile() for x in range(10)] for x in range(10)]
+        self.makeMines(Board)
     
     # Reveals mines (used in debug)
     def revealGrid(self, grid):
@@ -116,9 +117,7 @@ class Board():
         self.search(grid, x, y - 1)
         self.search(grid, x + 1, y)
         self.search(grid, x - 1, y)
-        
-        
+              
 Board.makeGrid(Board)
-Board.makeMines(Board)
 
 
