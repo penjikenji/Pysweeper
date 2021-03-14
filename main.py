@@ -58,7 +58,7 @@ class Main():
         pygame.init()
         running = True
         pygame.display.set_caption("Pymine")
-        pygame.display.set_icon(pygame.image.load('resources/bomb.png'))
+        pygame.display.set_icon(pygame.image.load('resources/mine.png'))
         self.grid = Board.getGrid(Board)  
         self.loadImage()          
         self.draw()
