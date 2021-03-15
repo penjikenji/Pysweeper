@@ -220,7 +220,7 @@ class Main():
     # Gets the image from dict depending on tile state
     def getTileImg(self, tile):
         if (tile.mine and tile.visible):
-            return "bomb"
+            return "mine"
         
         if (not tile.mine and tile.visible and tile.numAdj == 0):
             return "blankblock"
