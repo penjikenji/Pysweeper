@@ -1,9 +1,13 @@
 # Pysweeper
 
-An attempt to recreate a Windows XP minesweeper in Pygame.
-
 **Required modules**
-- Pygame
+- pygame
+- random
+- os
+- time
+
+## Usage
+        python main.py
 
 ## Other Tips
 There is a debug menu to find locations of all mines that is set to False by default.
