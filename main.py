@@ -193,6 +193,7 @@ class Main():
         self.isWin = False
         self.mined = False
         self.flagCounter = 10
+        self.initClick = False
 
         Board.makeGrid(Board)
         self.grid = Board.getGrid(Board)
